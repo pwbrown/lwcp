@@ -1,0 +1,22 @@
+{
+  "name": "lwcp",
+  "version": "1.0.0",
+  "description": "Parser for Livewire Control Protocol. Used to convert incoming LWCP strings to readable JSON structures.",
+  "main": "lib/lwcp.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwbrown/lwcp.git"
+  },
+  "author": "Philip Brown",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pwbrown/lwcp/issues"
+  },
+  "homepage": "https://github.com/pwbrown/lwcp#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
