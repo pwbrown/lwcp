@@ -1,3 +1,8 @@
+/**
+ * @copyright Philip Brown 2018
+ * @author Philip Brown
+ */
+
 const lwcp = require('../lib/lwcp'),
     assert = require('assert');
 

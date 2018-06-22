@@ -12,7 +12,7 @@ Parser for Livewire Control Protocol. Used to convert incoming LWCP strings to r
 ```Javascript
 const lwcp = require('lwcp');
 
-//LWCP Response from requesting list of shows within a studio
+//LWCP Response from requesting the list of shows within a studio
 var res = 'indi studio show_list=[[1, "Show 1"], [2, "Show 2"], [3, "Test 1"]]';
 
 //Parsed result
@@ -25,8 +25,8 @@ var parsed = lwcp.parse(res);
 ***
 #### Description
 Converts a raw LWCP String into an object with the following attributes
-* **'op'**: LWCP Operation (ex. get, set, call, hold, etc.)
-* **'obj'**: LWCP Object (ex. cc, studio, studio, etc.)
+* **'op'**: LWCP Operation (ex. get, set, call, hold, indi, ack, etc.)
+* **'obj'**: LWCP Object (ex. cc, studio)
 * **'sub'**: LWCP Subobject (ex. line, book, log)
 * **'id'**: LWCP Subobject id
 * **'props'**: LWCP properties
@@ -147,8 +147,8 @@ Parsed with custom model:
         { liveShowId: 3, liveShowName: 'Test 1' } ] } }
 ```
 
-## Example in Action - Studio Line Update Response
-**Overview**: In this example we are parsing the response from a studio line update
+## Example in Action - Studio Line List Response
+**Overview**: In this example we are parsing the response from a studio line list request
 
 #### CODE
 ```Javascript
@@ -157,8 +157,8 @@ const lwcp = require('lwcp');
 //Helper nodejs method to aid with printing
 const inspect = require('util').inspect;
 
-//VX-Prime server response from a line update within the studio
-var res = 'event studio.line#1 state=IDLE, callstate=IDLE, remote=NULL, direction=NONE, hybrid=0, time=NULL';
+//VX-Prime server response from requesting the list of lines in our current studio
+var res = 'indi studio line_list=[[IDLE, IDLE, "Main-Studio", "10", NULL, 0, NULL, "", NONE], [IDLE, IDLE, "Main-Studio", "10", NULL, 0, NULL, "", NONE]]';
 
 //Parsed result
 var parsed = lwcp.parse(res);
@@ -172,9 +172,10 @@ console.log(inspect(parsedAndConverted,false,null));
 
 //Parsed with custom model conversion
 var customModel = {
-    'remote': {name: 'remoteAddress'},
-    'time': {name: 'timeInSeconds'},
-    'hybrid': {name: 'hybridId'}
+    'line_list': {
+        name: 'listOfLines',
+        each: ['lineState','lineCallstate','lineName','lineLocal','lineRemote','lineHybrid','lineTime','lineComment','lineDirection']
+    }
 }
 var parsedWithCustom = lwcp.convert(parsed, customModel);
 console.log("\nParsed with custom model:")
@@ -184,41 +185,64 @@ console.log(inspect(parsedWithCustom,false,null));
 ```
 
 Parsed:
-{ op: 'event',
+{ op: 'indi',
   obj: 'studio',
-  sub: 'line',
-  id: '1',
+  sub: null,
+  id: null,
   props:
-   { state: 'IDLE',
-     callstate: 'IDLE',
-     remote: null,
-     direction: 'NONE',
-     hybrid: 0,
-     time: null } }
+   { line_list:
+      [ [ 'IDLE', 'IDLE', 'Main-Studio', '10', null, 0, null, '', 'NONE' ],
+        [ 'IDLE', 'IDLE', 'Main-Studio', '10', null, 0, null, '', 'NONE' ] ] } }
 
 Parsed And Converted:
-{ op: 'event',
+{ op: 'indi',
   obj: 'studio',
-  sub: 'line',
-  id: '1',
+  sub: null,
+  id: null,
   props:
-   { lineState: 'IDLE',
-     callState: 'IDLE',
-     lineRemote: null,
-     lineDirection: 'NONE',
-     lineHybrid: 0,
-     lineTime: null } }
+   { lineList:
+      [ { state: 'IDLE',
+          callstate: 'IDLE',
+          name: 'Main-Studio',
+          local: '10',
+          remote: null,
+          hybrid: 0,
+          time: null,
+          comment: '',
+          direction: 'NONE' },
+        { state: 'IDLE',
+          callstate: 'IDLE',
+          name: 'Main-Studio',
+          local: '10',
+          remote: null,
+          hybrid: 0,
+          time: null,
+          comment: '',
+          direction: 'NONE' } ] } }
 
 Parsed with custom model:
-{ op: 'event',
+{ op: 'indi',
   obj: 'studio',
-  sub: 'line',
-  id: '1',
+  sub: null,
+  id: null,
   props:
-   { lineState: 'IDLE',
-     callState: 'IDLE',
-     remoteAddress: null,
-     lineDirection: 'NONE',
-     hybridId: 0,
-     timeInSeconds: null } }
+   { listOfLines:
+      [ { lineState: 'IDLE',
+          lineCallstate: 'IDLE',
+          lineName: 'Main-Studio',
+          lineLocal: '10',
+          lineRemote: null,
+          lineHybrid: 0,
+          lineTime: null,
+          lineComment: '',
+          lineDirection: 'NONE' },
+        { lineState: 'IDLE',
+          lineCallstate: 'IDLE',
+          lineName: 'Main-Studio',
+          lineLocal: '10',
+          lineRemote: null,
+          lineHybrid: 0,
+          lineTime: null,
+          lineComment: '',
+          lineDirection: 'NONE' } ] } }
 ```
