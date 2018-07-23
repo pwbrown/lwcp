@@ -4,7 +4,13 @@
   "description": "Parser for Livewire Control Protocol. Used to convert incoming LWCP strings to readable JSON structures.",
   "main": "lib/lwcp.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --ci"
+  },
+  "jest": {
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
   },
   "repository": {
     "type": "git",
@@ -17,6 +23,7 @@
   },
   "homepage": "https://github.com/pwbrown/lwcp#readme",
   "devDependencies": {
-    "jest": "^23.4.1"
+    "jest": "^23.4.1",
+    "jest-junit": "^5.1.0"
   }
 }
