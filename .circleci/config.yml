@@ -28,4 +28,7 @@ jobs:
           name: Jest Suite
           command: yarn test
           environment:
-            JEST_JUNIT_OUTPUT: $CIRCLE_TEST_REPORTS/jest/results.xml
+            JEST_JUNIT_OUTPUT: test-results/jest/results.xml
+      
+      - store_test_results:
+          path: test-results
