@@ -26,8 +26,10 @@ jobs:
       # run tests!
       - run: yarn test
 
-      # Add Auth Key for NPM
+      # Add Auth Key for NPM and configure git
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: git config --global user.email "brown.philip1294@yahoo.com"
+      - run: git config --global user.name "Philip Brown"
       
       # Ensure a clean directory
       - run: git reset --hard
