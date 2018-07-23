@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/pwbrown/lwcp.svg?style=svg)](https://circleci.com/gh/pwbrown/lwcp)
+
 # LWCP Parser
 
 ## Description

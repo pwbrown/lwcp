@@ -25,3 +25,15 @@ jobs:
         
       # run tests!
       - run: yarn test
+
+      # Add Auth Key for NPM
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      
+      # Create new version
+      - run: npm version patch
+
+      # Push new version
+      - run: git push --follow-tags
+
+      # Publish to npm
+      - run: npm publish
