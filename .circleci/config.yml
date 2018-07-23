@@ -30,7 +30,7 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       
       # Ensure a clean directory
-      - run: git clean -fd
+      - run: git add . && git commit
 
       # Create new version
       - run: npm version patch
