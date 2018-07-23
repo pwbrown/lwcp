@@ -1,6 +1,6 @@
 {
   "name": "lwcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Parser for Livewire Control Protocol. Used to convert incoming LWCP strings to readable JSON structures.",
   "main": "lib/lwcp.js",
   "scripts": {
