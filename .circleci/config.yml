@@ -28,10 +28,7 @@ jobs:
           name: Jest Suite
           command: yarn test
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
-
-      # Add Auth Key for NPM and configure git
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-
-      # Publish to npm
-      - run: npm publish
+            JEST_JUNIT_OUTPUT: "test-results/jest/results.xml"
+      
+      - store_test_results:
+          path: test-results
